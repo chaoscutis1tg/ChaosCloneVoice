@@ -41,8 +41,8 @@ class VoiceCloner:
         self.tts.to(self.device)
         print("viXTTS Native Model loaded successfully!")
 
-    def clone(self, text: str, speaker_wav: str, output_path: str):
-        print(f"Generating native viXTTS voice... Language: vi, Text: {text}")
+    def clone(self, text: str, speaker_wav: str, output_path: str, speed: float = 1.0, temperature: float = 0.75):
+        print(f"Generating native viXTTS voice... Language: vi, Text: {text}, Speed: {speed}, Temp: {temperature}")
         import torchaudio
         
         try:
@@ -55,7 +55,8 @@ class VoiceCloner:
                 language="en",
                 gpt_cond_latent=gpt_cond_latent,
                 speaker_embedding=speaker_embedding,
-                temperature=0.75,
+                temperature=temperature ,
+                speed=speed
             )
             
             # Save audio

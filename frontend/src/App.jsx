@@ -1,22 +1,23 @@
-import { motion } from 'framer-motion';
-import VoiceCloner from './components/VoiceCloner';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import DashboardLayout from './layouts/DashboardLayout';
+import VoiceStudio from './pages/VoiceStudio';
+import ImageGen from './pages/ImageGen';
+import VideoGen from './pages/VideoGen';
+import Settings from './pages/Settings';
 import './index.css';
 
 function App() {
   return (
-    <div style={{ width: '100vw', maxWidth: '800px', padding: '20px' }}>
-      <motion.div
-        className="glass-panel"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="title-gradient">Clone Giọng Nói</h1>
-        <p className="subtitle">Công nghệ Voice Cloning & Lồng tiếng AI tức thì</p>
-
-        <VoiceCloner />
-      </motion.div>
-    </div>
+    <Router>
+      <DashboardLayout>
+        <Routes>
+          <Route path="/" element={<VoiceStudio />} />
+          <Route path="/image-gen" element={<ImageGen />} />
+          <Route path="/video-gen" element={<VideoGen />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </DashboardLayout>
+    </Router>
   );
 }
 
