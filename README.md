@@ -1,6 +1,6 @@
-# DubAI Viet - Local Voice Cloning (Version 1.0)
+# CloneVoiceAI - Personal Project by Chaos (Version 1.0)
 
-DubAI Viet là một ứng dụng Web (Local Web App) hỗ trợ sao chép giọng nói (Voice Cloning) Tiếng Việt chạy hoàn toàn offline trên máy cá nhân. Ứng dụng tích hợp các mô hình AI tiên tiến nhất hiện nay như **viXTTS** và **OmniVoice** để tạo ra giọng nói tự nhiên, truyền cảm.
+CloneVoiceAI là một dự án cá nhân được phát triển bởi **Chaos**. Đây là một ứng dụng Web (Local Web App) hỗ trợ sao chép giọng nói (Voice Cloning) Tiếng Việt chạy hoàn toàn offline trên máy cá nhân. Ứng dụng tích hợp các mô hình AI tiên tiến nhất hiện nay như **viXTTS** và **OmniVoice** để tạo ra giọng nói tự nhiên, truyền cảm.
 
 ## 🌟 Tính năng nổi bật
 - **Chạy hoàn toàn Offline (Local)**: Không cần gửi dữ liệu lên server, đảm bảo tính bảo mật và riêng tư 100%.
