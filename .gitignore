@@ -1,0 +1,40 @@
+# Environments
+venv/
+env/
+.env
+.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Node
+node_modules/
+dist/
+build/
+.npm/
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Large Model Files (Nếu bạn có lưu tải model nặng trong thư mục này)
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+
+# Bỏ qua các file tạm thời
+*.tmp
+*.temp
