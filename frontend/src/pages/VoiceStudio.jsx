@@ -14,6 +14,7 @@ const EMOTIONS = [
 
 export default function VoiceStudio() {
   const [model, setModel] = useState('omnivoice');
+  const [renderDevice, setRenderDevice] = useState('auto');
   const [isBatch, setIsBatch] = useState(false);
 
   const [profiles, setProfiles] = useState({});
@@ -115,6 +116,7 @@ export default function VoiceStudio() {
     formData.append('text', sentence);
     formData.append('speed', speed);
     formData.append('temperature', temperature);
+    formData.append('render_device', renderDevice);
 
     if (isCreatingProfile && file) {
       formData.append('file', file);
@@ -192,6 +194,24 @@ export default function VoiceStudio() {
         >
           <option value="omnivoice" style={{ color: 'black' }}>OmniVoice (Khuyên dùng - Nhanh, Đa ngôn ngữ)</option>
           <option value="vixtts" style={{ color: 'black' }}>viXTTS (Cổ điển - Tối ưu Tiếng Việt bản địa)</option>
+        </select>
+      </div>
+
+      {/* Render Device Selection */}
+      <div className="input-group">
+        <label className="input-label">
+          <Cpu size={18} />
+          Thiết bị Render (Render Device)
+        </label>
+        <select
+          value={renderDevice}
+          onChange={(e) => setRenderDevice(e.target.value)}
+          className="textarea-custom"
+          style={{ height: '50px', minHeight: 'auto', color: 'white' }}
+        >
+          <option value="auto" style={{ color: 'black' }}>Tự động (Khuyên dùng - Ưu tiên GPU nếu có)</option>
+          <option value="cpu" style={{ color: 'black' }}>CPU (Chậm hơn, dành cho máy không có Card rời)</option>
+          <option value="gpu" style={{ color: 'black' }}>GPU (Nhanh, cần Card đồ họa NVIDIA rời)</option>
         </select>
       </div>
 

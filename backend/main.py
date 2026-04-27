@@ -83,8 +83,11 @@ async def clone_voice(
     sample_name: Optional[str] = Form(None),
     emotion: Optional[str] = Form("normal"),
     speed: Optional[float] = Form(1.0),
-    temperature: Optional[float] = Form(0.75)
+    temperature: Optional[float] = Form(0.75),
+    render_device: Optional[str] = Form("auto")
 ):
+    cloner.set_device(render_device)
+    
     tmp_in_path = None
     
     if sample_name:

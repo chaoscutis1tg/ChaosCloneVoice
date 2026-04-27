@@ -93,11 +93,33 @@ async def clone_voice(
     sample_name: Optional[str] = Form(None),
     emotion: Optional[str] = Form("normal"),
     speed: Optional[float] = Form(1.0),
-    temperature: Optional[float] = Form(0.75)
+    temperature: Optional[float] = Form(0.75),
+    render_device: Optional[str] = Form("auto")
 ):
     global model
     if model is None:
         return {"error": "OmniVoice model is not loaded"}
+
+    # Handle device switching
+    target_device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    if render_device == "cpu":
+        target_device = "cpu"
+    elif render_device == "gpu" and torch.cuda.is_available():
+        target_device = "cuda:0"
+
+    current_device = getattr(model, 'current_device', None)
+    if current_device is None:
+        # Initial guess based on what was used in startup
+        current_device = "cuda:0" if torch.cuda.is_available() else "cpu"
+
+    if current_device != target_device:
+        try:
+            print(f"Moving OmniVoice model to {target_device}...")
+            model.to(target_device)
+            model.current_device = target_device
+        except Exception as e:
+            print(f"Warning: Could not move OmniVoice to {target_device}: {e}")
+
 
     tmp_in_path = None
     is_temp_input = False

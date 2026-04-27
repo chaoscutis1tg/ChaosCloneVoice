@@ -41,6 +41,17 @@ class VoiceCloner:
         self.tts.to(self.device)
         print("viXTTS Native Model loaded successfully!")
 
+    def set_device(self, target_device: str):
+        if target_device == "auto":
+            target_device = "cuda" if torch.cuda.is_available() else "cpu"
+        elif target_device == "gpu":
+            target_device = "cuda" if torch.cuda.is_available() else "cpu"
+            
+        if self.device != target_device:
+            print(f"Moving viXTTS model to {target_device}...")
+            self.tts.to(target_device)
+            self.device = target_device
+
     def clone(self, text: str, speaker_wav: str, output_path: str, speed: float = 1.0, temperature: float = 0.75):
         print(f"Generating native viXTTS voice... Language: vi, Text: {text}, Speed: {speed}, Temp: {temperature}")
         import torchaudio
