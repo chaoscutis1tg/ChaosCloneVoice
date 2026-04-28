@@ -1,14 +1,16 @@
-# CloneVoiceAI - Personal Project by Chaos (Version 1.0)
+# Chaos Studio - Lồng Tiếng AI (Version 1.2)
 
-CloneVoiceAI là một dự án cá nhân được phát triển bởi **Chaos**. Đây là một ứng dụng Web (Local Web App) hỗ trợ sao chép giọng nói (Voice Cloning) Tiếng Việt chạy hoàn toàn offline trên máy cá nhân. Ứng dụng tích hợp các mô hình AI tiên tiến nhất hiện nay như **viXTTS** và **OmniVoice** để tạo ra giọng nói tự nhiên, truyền cảm.
+Chaos Studio (trước đây là CloneVoiceAI) là một ứng dụng Web (Local Web App) hỗ trợ sao chép giọng nói (Voice Cloning) Tiếng Việt chạy hoàn toàn offline trên máy cá nhân. Ứng dụng tích hợp các mô hình AI tiên tiến nhất hiện nay như **viXTTS** và **OmniVoice** để tạo ra giọng nói tự nhiên, truyền cảm.
 
 ## 🌟 Tính năng nổi bật
 - **Chạy hoàn toàn Offline (Local)**: Không cần gửi dữ liệu lên server, đảm bảo tính bảo mật và riêng tư 100%.
 - **Hỗ trợ đa mô hình (Multi-Model)**:
   - `viXTTS`: Tối ưu hóa cho ngữ điệu Tiếng Việt tự nhiên.
   - `OmniVoice`: Tốc độ sinh giọng nói cực nhanh, độ trễ thấp.
-- **Quản lý Hồ sơ Giọng nói (Voice Profiles)**: Lưu và tái sử dụng các mẫu giọng nói (samples) dễ dàng mà không cần phải tải lên lại.
-- **Kiến trúc Microservices**: Frontend (React) và 2 Backend API (FastAPI) hoạt động độc lập, dễ dàng mở rộng.
+- **Tuỳ chọn Render CPU/GPU**: Cho phép chọn thiết bị render trên giao diện. Hỗ trợ tận dụng tối đa sức mạnh của Card đồ hoạ NVIDIA (CUDA).
+- **Hồ sơ & Cảm xúc (Voice Profiles)**: Quản lý nhân vật với các biểu cảm (Vui, Buồn, Giận...).
+- **Xử lý hàng loạt (Batch Processing)**: Render hàng loạt kịch bản và tải về dưới dạng file ZIP.
+- **Kiến trúc Microservices**: Frontend (React) và 2 Backend API (FastAPI) hoạt động độc lập.
 
 ## 💻 Yêu cầu hệ thống (Prerequisites)
 Để chạy được ứng dụng này, máy tính của bạn cần được cài đặt sẵn:

@@ -44,7 +44,7 @@ export default function VoiceStudio() {
 
   const fetchProfiles = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/profiles');
+      const res = await fetch(`http://${window.location.hostname}:8000/api/profiles`);
       const data = await res.json();
       if (data.profiles) {
         setProfiles(data.profiles);
@@ -72,7 +72,7 @@ export default function VoiceStudio() {
     formData.append('emotion', newProfileEmotion);
     formData.append('file', file);
     try {
-      const res = await fetch('http://localhost:8000/api/profiles', { method: 'POST', body: formData });
+      const res = await fetch(`http://${window.location.hostname}:8000/api/profiles`, { method: 'POST', body: formData });
       if (res.ok) {
         alert("Đã lưu cảm xúc nhân vật vào Kho Tổng!");
         await fetchProfiles();
@@ -89,7 +89,7 @@ export default function VoiceStudio() {
   };
 
   const getApiUrl = () => {
-    return model === 'omnivoice' ? 'http://localhost:8001/api/clone' : 'http://localhost:8000/api/clone';
+    return model === 'omnivoice' ? `http://${window.location.hostname}:8001/api/clone` : `http://${window.location.hostname}:8000/api/clone`;
   };
 
   const downloadZip = async () => {
@@ -128,9 +128,12 @@ export default function VoiceStudio() {
     }
 
     const res = await fetch(getApiUrl(), { method: 'POST', body: formData });
-    if (!res.ok) throw new Error('API Error');
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      return { error: errData.detail || 'Lỗi hệ thống từ Backend' };
+    }
     const blob = await res.blob();
-    return URL.createObjectURL(blob);
+    return { url: URL.createObjectURL(blob) };
   };
 
   const generateVoice = async () => {
@@ -140,8 +143,11 @@ export default function VoiceStudio() {
     try {
       if (!isBatch) {
         setSingleResult(null);
-        const url = await callCloneApi(text);
-        setSingleResult(url);
+        const result = await callCloneApi(text);
+        if (result.error) {
+          throw new Error(result.error);
+        }
+        setSingleResult(result.url);
       } else {
         setBatchResults([]);
         const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
@@ -150,17 +156,18 @@ export default function VoiceStudio() {
         for (let i = 0; i < lines.length; i++) {
           setCurrentBatchIndex(i + 1);
           try {
-            const url = await callCloneApi(lines[i]);
-            results.push({ line: lines[i], url, success: true });
+            const result = await callCloneApi(lines[i]);
+            if (result.error) throw new Error(result.error);
+            results.push({ line: lines[i], url: result.url, success: true });
           } catch (e) {
-            results.push({ line: lines[i], url: null, success: false });
+            results.push({ line: lines[i], url: null, success: false, error: e.message });
           }
           setBatchResults([...results]);
         }
       }
     } catch (error) {
       console.error(error);
-      alert('Có lỗi xảy ra khi gọi AI, hãy chắc chắn backend đang chạy đúng cổng!');
+      alert('Lỗi: ' + (error.message || 'Có lỗi xảy ra khi gọi AI, hãy chắc chắn backend đang chạy đúng cổng!'));
     } finally {
       setIsGenerating(false);
       setCurrentBatchIndex(0);
@@ -176,7 +183,7 @@ export default function VoiceStudio() {
       style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
     >
       <div>
-        <h1 className="title-gradient">Voice Studio</h1>
+        <h1 className="title-gradient">Chaos Studio</h1>
         <p className="subtitle">Thu âm, Tinh chỉnh và Lồng tiếng AI tức thì</p>
       </div>
 
@@ -192,8 +199,8 @@ export default function VoiceStudio() {
           className="textarea-custom"
           style={{ height: '50px', minHeight: 'auto', color: 'white' }}
         >
-          <option value="omnivoice" style={{ color: 'black' }}>OmniVoice (Khuyên dùng - Nhanh, Đa ngôn ngữ)</option>
-          <option value="vixtts" style={{ color: 'black' }}>viXTTS (Cổ điển - Tối ưu Tiếng Việt bản địa)</option>
+          <option value="omnivoice" style={{ color: 'black' }}>OmniVoice (Model này thông minh hơn chút)</option>
+          <option value="vixtts" style={{ color: 'black' }}>viXTTS (Model này hơi ngu)</option>
         </select>
       </div>
 

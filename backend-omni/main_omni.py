@@ -101,11 +101,14 @@ async def clone_voice(
         return {"error": "OmniVoice model is not loaded"}
 
     # Handle device switching
-    target_device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    if render_device == "cpu":
+    if render_device == "auto":
+        target_device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    elif render_device == "cpu":
         target_device = "cpu"
-    elif render_device == "gpu" and torch.cuda.is_available():
+    elif render_device == "gpu":
         target_device = "cuda:0"
+    else:
+        target_device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
     current_device = getattr(model, 'current_device', None)
     if current_device is None:
@@ -119,9 +122,9 @@ async def clone_voice(
             model.current_device = target_device
         except Exception as e:
             print(f"Warning: Could not move OmniVoice to {target_device}: {e}")
-
-
-    tmp_in_path = None
+            from fastapi import HTTPException
+            if render_device == "gpu":
+                raise HTTPException(status_code=400, detail=f"Không thể chuyển sang GPU (CUDA): {e}. Vui lòng chạy file install_gpu.bat để cập nhật PyTorch.")
     is_temp_input = False
 
     if sample_name:

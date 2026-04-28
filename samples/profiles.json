@@ -3,5 +3,10 @@
     "emotions": {
       "normal": "Thanh_Lương_normal.wav"
     }
+  },
+  "Độ Mixi": {
+    "emotions": {
+      "normal": "Độ_Mixi_normal.wav"
+    }
   }
 }

@@ -45,7 +45,9 @@ class VoiceCloner:
         if target_device == "auto":
             target_device = "cuda" if torch.cuda.is_available() else "cpu"
         elif target_device == "gpu":
-            target_device = "cuda" if torch.cuda.is_available() else "cpu"
+            target_device = "cuda"
+        elif target_device == "cpu":
+            target_device = "cpu"
             
         if self.device != target_device:
             print(f"Moving viXTTS model to {target_device}...")
