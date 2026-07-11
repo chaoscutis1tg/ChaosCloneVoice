@@ -162,7 +162,7 @@ if errorlevel 1 (
     echo [CANH BAO] Co loi khi cai dat mot so thu vien.
     echo Thu cai dat lai cac thu vien chinh...
     pip install fastapi uvicorn python-multipart soundfile
-    pip install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu124
+    pip install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
     pip install omnivoice
 )
 call deactivate

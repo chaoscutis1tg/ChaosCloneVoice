@@ -192,7 +192,7 @@ export default function VoiceStudio() {
       <div className="input-group">
         <label className="input-label">
           <Cpu size={18} />
-          Thiết bị Render (Render Device)
+          <span>Thiết bị Render (Render Device)</span>
         </label>
         <select
           value={renderDevice}
@@ -210,8 +210,8 @@ export default function VoiceStudio() {
       <div className="input-group">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
           <label className="input-label" style={{ marginBottom: 0 }}>
-            {isCreatingProfile ? <UploadCloud size={18} /> : <FolderOpen size={18} />}
-            Hồ sơ Nhân vật (Voice Profiles)
+            {isCreatingProfile ? <UploadCloud key="upload-icon" size={18} /> : <FolderOpen key="folder-icon" size={18} />}
+            <span>Hồ sơ Nhân vật (Voice Profiles)</span>
           </label>
           <div style={{ background: 'rgba(0,0,0,0.3)', padding: '5px', borderRadius: '8px', display: 'flex', gap: '10px' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', fontSize: '0.85rem' }}>
@@ -286,7 +286,8 @@ export default function VoiceStudio() {
 
             {file && (
               <button onClick={saveNewProfile} disabled={isSavingSample} style={{ marginTop: '1rem', width: '100%', padding: '0.8rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.4rem', border: 'none', borderRadius: '6px', background: 'var(--primary)', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
-                {isSavingSample ? <Loader2 className="loader" size={16} /> : <Save size={16} />} Lưu Vào Hồ Sơ "{newProfileName || 'Mới'}"
+                {isSavingSample ? <Loader2 key="loader" className="loader" size={16} /> : <Save key="save" size={16} />}
+                <span>Lưu Vào Hồ Sơ "{newProfileName || 'Mới'}"</span>
               </button>
             )}
           </div>
@@ -297,7 +298,7 @@ export default function VoiceStudio() {
       <div className="input-group">
         <label className="input-label" style={{ color: 'var(--accent)' }}>
           <Sliders size={18} />
-          Tinh chỉnh Giọng nói (Voice Tuning)
+          <span>Tinh chỉnh Giọng nói (Voice Tuning)</span>
         </label>
         <div style={{ background: 'rgba(0,0,0,0.2)', padding: '1.5rem', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
@@ -339,8 +340,8 @@ export default function VoiceStudio() {
       <div className="input-group">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
           <label className="input-label" style={{ marginBottom: 0 }}>
-            {isBatch ? <LayoutList size={18} /> : <Mic size={18} />}
-            Kịch bản lồng tiếng
+            {isBatch ? <LayoutList key="batch-icon" size={18} /> : <Mic key="mic-icon" size={18} />}
+            <span>Kịch bản lồng tiếng</span>
           </label>
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
             <input type="checkbox" checked={isBatch} onChange={(e) => setIsBatch(e.target.checked)} />
@@ -363,17 +364,13 @@ export default function VoiceStudio() {
         disabled={isGenerating || !text || (!isCreatingProfile && !selectedProfile) || (isCreatingProfile && !file)}
         whileTap={{ scale: 0.98 }}
       >
-        {isGenerating ? (
-          <>
-            <Loader2 className="loader" size={20} />
-            Đang tổng hợp AI... {isBatch ? `(Câu ${currentBatchIndex}/${text.split('\n').filter(l => l.trim()).length})` : ''}
-          </>
-        ) : (
-          <>
-            <PlayCircle size={20} />
-            {isBatch ? 'Chạy lồng tiếng Hàng Loạt' : 'Bắt đầu Lồng tiếng'}
-          </>
-        )}
+        {isGenerating ? <Loader2 key="loader" className="loader" size={20} /> : <PlayCircle key="play" size={20} />}
+        <span>
+          {isGenerating
+            ? `Đang tổng hợp AI... ${isBatch ? `(Câu ${currentBatchIndex}/${text.split('\n').filter(l => l.trim()).length})` : ''}`
+            : (isBatch ? 'Chạy lồng tiếng Hàng Loạt' : 'Bắt đầu Lồng tiếng')
+          }
+        </span>
       </motion.button>
 
       {/* Results Rendering */}
@@ -382,7 +379,7 @@ export default function VoiceStudio() {
           <motion.div className="audio-result-container" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
             <label className="input-label" style={{ marginBottom: '1rem', color: 'var(--primary-hover)' }}>
               <Settings2 size={18} />
-              Kết quả Lồng tiếng:
+              <span>Kết quả Lồng tiếng:</span>
             </label>
             <audio controls src={singleResult} autoPlay />
           </motion.div>
@@ -393,13 +390,14 @@ export default function VoiceStudio() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <label className="input-label" style={{ color: 'var(--primary-hover)', margin: 0 }}>
                 <LayoutList size={18} />
-                Kết quả Hàng Loạt:
+                <span>Kết quả Hàng Loạt:</span>
               </label>
               <button
                 onClick={downloadZip}
                 style={{ padding: '0.4rem 1rem', display: 'flex', alignItems: 'center', gap: '0.4rem', border: 'none', borderRadius: '6px', background: 'var(--primary)', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}
               >
-                <DownloadCloud size={16} /> Tải xuống tất cả (ZIP)
+                <DownloadCloud size={16} />
+                <span>Tải xuống tất cả (ZIP)</span>
               </button>
             </div>
             {batchResults.map((r, i) => (
