@@ -2,27 +2,55 @@
 chcp 65001 >nul
 title Chaos Studio - Voice Cloning
 
-if not exist "frontend\node_modules\" (
-    echo =^> Phát hiện chưa cài đặt Frontend. Đang tiến hành cài đặt tự động...
-    call install.bat
+REM Kiem tra xem da cai dat chua, neu chua thi goi install
+set "NEED_INSTALL=0"
+if not exist "frontend\node_modules\" set "NEED_INSTALL=1"
+if not exist "backend-omni\venv\" set "NEED_INSTALL=1"
+
+REM Kiem tra Python version trong venv (phai la 3.10)
+if exist "backend-omni\venv\Scripts\python.exe" (
+    backend-omni\venv\Scripts\python.exe --version 2>nul | findstr /C:"3.10" >nul
+    if errorlevel 1 (
+        echo => Phat hien Backend dang dung Python sai version. Can cai dat lai...
+        set "NEED_INSTALL=1"
+    )
 )
-if not exist "backend\venv\" (
-    echo =^> Phát hiện chưa cài đặt Backend viXTTS. Đang tiến hành cài đặt tự động...
-    call install.bat
-)
-if not exist "backend-omni\venv\" (
-    echo =^> Phát hiện chưa cài đặt Backend OmniVoice. Đang tiến hành cài đặt tự động...
+
+if "%NEED_INSTALL%"=="1" (
+    echo ===================================================
+    echo  Phat hien chua cai dat hoac cai dat chua dung.
+    echo  Dang tien hanh cai dat tu dong...
+    echo ===================================================
+    echo.
     call install.bat
 )
 
-echo Starting Chaos Studio Frontend...
+REM Kiem tra lai lan cuoi truoc khi start
+if not exist "backend-omni\venv\Scripts\uvicorn.exe" (
+    echo [LOI] Khong tim thay uvicorn trong backend-omni\venv.
+    echo Vui long chay lai install.bat truoc!
+    pause
+    exit /b
+)
+
+echo.
+echo ===================================================
+echo  Dang khoi dong Chaos Studio...
+echo ===================================================
+echo.
+
+echo [1/2] Starting Frontend...
 start cmd /k "cd frontend && npm run dev"
 
-echo Starting Chaos Studio Backend (viXTTS) on Port 8000...
-start cmd /k "cd backend && call venv\Scripts\activate.bat && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+echo [2/2] Starting Backend OmniVoice (Port 8000)...
+start cmd /k "cd backend-omni && call venv\Scripts\activate.bat && uvicorn main_omni:app --host 0.0.0.0 --port 8000 --reload"
 
-echo Starting Chaos Studio Backend (OmniVoice) on Port 8001...
-start cmd /k "cd backend-omni && call venv\Scripts\activate.bat && uvicorn main_omni:app --host 0.0.0.0 --port 8001 --reload"
-
-echo Tất cả dịch vụ đã được khởi động! Tắt các cửa sổ đen để dừng ứng dụng.
+echo.
+echo ===================================================
+echo  Tat ca dich vu da duoc khoi dong!
+echo  - Frontend:        http://localhost:5173
+echo  - Backend Omni:    http://localhost:8000
+echo ===================================================
+echo  Tat cac cua so den (CMD) de dung ung dung.
+echo ===================================================
 pause

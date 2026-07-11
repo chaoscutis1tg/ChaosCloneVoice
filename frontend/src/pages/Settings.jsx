@@ -18,7 +18,6 @@ export default function Settings() {
         <label className="input-label">Mô hình mặc định</label>
         <select className="textarea-custom" style={{ height: '50px', minHeight: 'auto' }}>
           <option>OmniVoice</option>
-          <option>viXTTS</option>
         </select>
       </div>
       

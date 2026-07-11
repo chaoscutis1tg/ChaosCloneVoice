@@ -13,7 +13,7 @@ const EMOTIONS = [
 ];
 
 export default function VoiceStudio() {
-  const [model, setModel] = useState('omnivoice');
+
   const [renderDevice, setRenderDevice] = useState('auto');
   const [isBatch, setIsBatch] = useState(false);
 
@@ -89,7 +89,7 @@ export default function VoiceStudio() {
   };
 
   const getApiUrl = () => {
-    return model === 'omnivoice' ? `http://${window.location.hostname}:8001/api/clone` : `http://${window.location.hostname}:8000/api/clone`;
+    return `http://${window.location.hostname}:8000/api/clone`;
   };
 
   const downloadZip = async () => {
@@ -187,22 +187,6 @@ export default function VoiceStudio() {
         <p className="subtitle">Thu âm, Tinh chỉnh và Lồng tiếng AI tức thì</p>
       </div>
 
-      {/* Model Selection */}
-      <div className="input-group">
-        <label className="input-label">
-          <Cpu size={18} />
-          Lõi AI (Mô hình)
-        </label>
-        <select
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          className="textarea-custom"
-          style={{ height: '50px', minHeight: 'auto', color: 'white' }}
-        >
-          <option value="omnivoice" style={{ color: 'black' }}>OmniVoice (Model này thông minh hơn chút)</option>
-          <option value="vixtts" style={{ color: 'black' }}>viXTTS (Model này hơi ngu)</option>
-        </select>
-      </div>
 
       {/* Render Device Selection */}
       <div className="input-group">
