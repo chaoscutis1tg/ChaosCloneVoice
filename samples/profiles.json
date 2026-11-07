@@ -8,5 +8,140 @@
     "emotions": {
       "normal": "Độ_Mixi_normal.wav"
     }
+  },
+  "Ông già nghiêm túc": {
+    "emotions": {
+      "normal": "Ông_già_nghiêm_túc_normal.wav"
+    }
+  },
+  "NPC trọng tài": {
+    "emotions": {
+      "normal": "NPC_trọng_tài_normal.wav"
+    }
+  },
+  "Hồ Chí Minh": {
+    "emotions": {
+      "normal": "Hồ_Chí_Minh_normal.wav"
+    }
+  },
+  "Ngọc Hoa": {
+    "emotions": {
+      "normal": "Ngọc_Hoa_normal.wav"
+    }
+  },
+  "Thủy tinh": {
+    "emotions": {
+      "normal": "Thủy_tinh_normal.wav"
+    }
+  },
+  "Dẫn chuyện": {
+    "emotions": {
+      "normal": "Dẫn_chuyện_normal.wav"
+    }
+  },
+  "Minh Hùng": {
+    "emotions": {
+      "normal": "Minh_Hùng_normal.wav"
+    }
+  },
+  "Vua Hùng": {
+    "emotions": {
+      "normal": "Vua_Hùng_normal.wav"
+    }
+  },
+  "Mẫu hậu": {
+    "emotions": {
+      "normal": "Mẫu_hậu_normal.wav"
+    }
+  },
+  "Anh Núi": {
+    "emotions": {
+      "normal": "Anh_Núi_normal.wav"
+    }
+  },
+  "Thục Phán": {
+    "emotions": {
+      "normal": "Thục_Phán_normal.wav"
+    }
+  },
+  "Nồi Hầu": {
+    "emotions": {
+      "normal": "Nồi_Hầu_normal.wav"
+    }
+  },
+  "Dẫn chuyện 2": {
+    "emotions": {
+      "normal": "Dẫn_chuyện_2_normal.wav"
+    }
+  },
+  "Sứ giả": {
+    "emotions": {
+      "normal": "Sứ_giả_normal.wav"
+    }
+  },
+  "Triệu Đà": {
+    "emotions": {
+      "normal": "Triệu_Đà_normal.wav"
+    }
+  },
+  "Mỵ Châu": {
+    "emotions": {
+      "normal": "Mỵ_Châu_normal.wav"
+    }
+  },
+  "Trọng Thủy": {
+    "emotions": {
+      "normal": "Trọng_Thủy_normal.wav"
+    }
+  },
+  "Triệu Hồ": {
+    "emotions": {
+      "normal": "Triệu_Hồ_normal.wav"
+    }
+  },
+  "Lạc Long Quân": {
+    "emotions": {
+      "normal": "Lạc_Long_Quân_normal.wav"
+    }
+  },
+  "Lạc Long Quân 2": {
+    "emotions": {
+      "normal": "Lạc_Long_Quân_2_normal.wav"
+    }
+  },
+  "Âu Cơ": {
+    "emotions": {
+      "normal": "Âu_Cơ_normal.wav"
+    }
+  },
+  "Hắc Long": {
+    "emotions": {
+      "normal": "Hắc_Long_normal.wav"
+    }
+  },
+  "Kim Quý": {
+    "emotions": {
+      "normal": "Kim_Quý_normal.wav"
+    }
+  },
+  "Âu Cơ 2": {
+    "emotions": {
+      "normal": "Âu_Cơ_2_normal.wav"
+    }
+  },
+  "Vua Ân": {
+    "emotions": {
+      "normal": "Vua_Ân_normal.wav"
+    }
+  },
+  "Giọng nữ khỏe": {
+    "emotions": {
+      "surprised": "Giọng_nữ_khỏe_surprised.wav"
+    }
+  },
+  "Ce Thắm": {
+    "emotions": {
+      "normal": "Ce_Thắm_normal.wav"
+    }
   }
 }
