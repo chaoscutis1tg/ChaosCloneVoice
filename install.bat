@@ -1,10 +1,14 @@
 @echo off
 chcp 65001 >nul
+cd /d "%~dp0"
 title Cai dat Chaos Studio (Voice Cloning)
 echo ===================================================
 echo     Chaos Studio - Trinh cai dat tu dong
 echo ===================================================
 echo.
+
+REM Uu tien duong dan Node.js
+if exist "C:\Program Files\nodejs" set "PATH=C:\Program Files\nodejs;%PATH%"
 
 REM ===================================================
 REM  KIEM TRA VA CAI DAT PYTHON 3.10
@@ -16,7 +20,7 @@ REM Thu tim Python 3.10 bang py launcher
 py -3.10 --version >nul 2>&1
 if %errorlevel% equ 0 (
     set "PY310=py -3.10"
-    echo => Tim thay Python 3.10 qua py launcher.
+    echo [+] Tim thay Python 3.10 qua py launcher.
     goto :python_ok
 )
 
@@ -24,7 +28,7 @@ REM Thu tim python3.10.exe truc tiep
 where python3.10 >nul 2>&1
 if %errorlevel% equ 0 (
     set "PY310=python3.10"
-    echo => Tim thay python3.10 tren PATH.
+    echo [+] Tim thay python3.10 tren PATH.
     goto :python_ok
 )
 
@@ -37,15 +41,15 @@ for %%P in (
 ) do (
     if exist %%P (
         set "PY310=%%~P"
-        echo => Tim thay Python 3.10 tai %%P
+        echo [+] Tim thay Python 3.10 tai %%P
         goto :python_ok
     )
 )
 
 REM Khong tim thay -> Tu dong cai dat
 echo.
-echo => KHONG TIM THAY Python 3.10!
-echo => Dang tu dong cai dat Python 3.10 qua winget...
+echo [!] KHONG TIM THAY Python 3.10!
+echo [+] Dang tu dong cai dat Python 3.10 qua winget...
 echo    (Qua trinh nay co the mat vai phut)
 echo.
 winget install --id Python.Python.3.10 -e --source winget --accept-package-agreements --accept-source-agreements
@@ -59,8 +63,8 @@ if errorlevel 1 (
 )
 
 echo.
-echo => Da cai dat Python 3.10 thanh cong!
-echo => Dang lam moi PATH...
+echo [+] Da cai dat Python 3.10 thanh cong!
+echo [+] Dang lam moi PATH...
 
 REM Lam moi PATH de nhan dien Python moi cai
 set "PATH=%LOCALAPPDATA%\Programs\Python\Python310\;%LOCALAPPDATA%\Programs\Python\Python310\Scripts\;%PATH%"
@@ -85,7 +89,7 @@ pause
 exit /b
 
 :python_ok
-echo => Su dung: %PY310%
+echo [+] Su dung: %PY310%
 %PY310% --version
 echo.
 
@@ -95,31 +99,31 @@ REM ===================================================
 echo [Kiem tra Node.js]...
 node -v >nul 2>&1
 if errorlevel 1 (
-    echo => CANH BAO: Khong tim thay Node.js!
-    echo => Dang thu tu dong cai dat Node.js qua winget...
+    echo [!] CANH BAO: Khong tim thay Node.js!
+    echo [+] Dang thu tu dong cai dat Node.js qua winget...
     winget install --id OpenJS.NodeJS -e --source winget --accept-package-agreements --accept-source-agreements
     if errorlevel 1 (
         echo [LOI] Khong the tu dong cai dat Node.js. Vui long tai va cai dat thu cong tu https://nodejs.org
         pause
         exit /b
     )
-    echo => Cai dat Node.js thanh cong!
-    echo => Vui long DONG CUA SO NAY va mo lai install.bat de tiep tuc!
+    echo [+] Cai dat Node.js thanh cong!
+    echo [!] Vui long DONG CUA SO NAY va mo lai install.bat de tiep tuc!
     pause
     exit /b
 )
-echo => Node.js da duoc cai dat.
+echo [+] Node.js da duoc cai dat.
 
 REM ===================================================
-REM  [1/3] CAI DAT FRONTEND
+REM  [1/2] CAI DAT FRONTEND
 REM ===================================================
 echo.
 echo ===================================================
 echo [1/2] Dang cai dat thu vien cho Frontend (Giao dien)...
 echo ===================================================
-cd frontend
+cd /d "%~dp0frontend"
 call npm install
-cd ..
+cd /d "%~dp0"
 
 REM ===================================================
 REM  [2/2] CAI DAT BACKEND OmniVoice
@@ -128,7 +132,7 @@ echo.
 echo ===================================================
 echo [2/2] Dang cai dat Backend (OmniVoice)...
 echo ===================================================
-cd backend-omni
+cd /d "%~dp0backend-omni"
 
 REM Kiem tra venv co ton tai va dung Python version khong
 set "NEED_NEW_VENV=0"
@@ -137,14 +141,14 @@ if not exist "venv" (
 ) else (
     venv\Scripts\python.exe --version 2>nul | findstr /C:"3.10" >nul
     if errorlevel 1 (
-        echo => Phat hien venv dang dung Python SAI version! Dang xoa va tao lai...
+        echo [!] Phat hien venv dang dung Python SAI version! Dang xoa va tao lai...
         rmdir /s /q venv
         set "NEED_NEW_VENV=1"
     )
 )
 
 if "%NEED_NEW_VENV%"=="1" (
-    echo => Dang tao moi truong ao voi Python 3.10...
+    echo [+] Dang tao moi truong ao voi Python 3.10...
     %PY310% -m venv venv
     if errorlevel 1 (
         echo [LOI] Khong the tao moi truong ao. Kiem tra lai Python 3.10.
@@ -153,7 +157,7 @@ if "%NEED_NEW_VENV%"=="1" (
     )
 )
 
-echo => Dang cai dat cac thu vien Python cho OmniVoice...
+echo [+] Dang cai dat cac thu vien Python cho OmniVoice...
 call venv\Scripts\activate.bat
 python -m pip install --upgrade pip
 pip install -r requirements.txt
@@ -166,7 +170,7 @@ if errorlevel 1 (
     pip install omnivoice
 )
 call deactivate
-cd ..
+cd /d "%~dp0"
 
 echo.
 echo ===================================================
